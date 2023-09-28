@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: { { include "greetings-service-helm-way.fullname" . } }
+  name: { { include "with-helm.fullname" . } }
   labels:
-    { { - include "greetings-service-helm-way.labels" . | nindent 4 } }
+    { { - include "with-helm.labels" . | nindent 4 } }
 spec:
   { { - if not .Values.autoscaling.enabled } }
   replicas: { { .Values.replicaCount } }
   { { - end } }
   selector:
     matchLabels:
-      { { - include "greetings-service-helm-way.selectorLabels" . | nindent 6 } }
+      { { - include "with-helm.selectorLabels" . | nindent 6 } }
   template:
     metadata:
       { { - with .Values.podAnnotations } }
@@ -18,13 +18,13 @@ spec:
         { { - toYaml . | nindent 8 } }
       { { - end } }
       labels:
-        { { - include "greetings-service-helm-way.selectorLabels" . | nindent 8 } }
+        { { - include "with-helm.selectorLabels" . | nindent 8 } }
     spec:
       { { - with .Values.imagePullSecrets } }
       imagePullSecrets:
         { { - toYaml . | nindent 8 } }
       { { - end } }
-      serviceAccountName: { { include "greetings-service-helm-way.serviceAccountName" . } }
+      serviceAccountName: { { include "with-helm.serviceAccountName" . } }
       securityContext:
         { { - toYaml .Values.podSecurityContext | nindent 8 } }
       containers:
@@ -39,12 +39,12 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /api/v1/greeting
-              port: http
+              path: /api/actuator/health
+              port: 8090
           readinessProbe:
             httpGet:
-              path: /api/v1/greeting
-              port: http
+              path: /api/actuator/health
+              port: 8090
           resources:
             { { - toYaml .Values.resources | nindent 12 } }
       { { - with .Values.nodeSelector } }
