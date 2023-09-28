@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "{{ include "greetings-service-helm-way.fullname" . }}-test-connection"
+  name: "{{ include "with-helm.fullname" . }}-test-connection"
   labels:
-    { { - include "greetings-service-helm-way.labels" . | nindent 4 } }
+    { { - include "with-helm.labels" . | nindent 4 } }
   annotations:
     "helm.sh/hook": test
 spec:
@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: [ 'wget' ]
-      args: [ '{{ include "greetings-service-helm-way.fullname" . }}:{{ .Values.service.port }}' ]
+      args: [ '{{ include "with-helm.fullname" . }}:{{ .Values.service.port }}' ]
   restartPolicy: Never

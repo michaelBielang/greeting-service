@@ -53,3 +53,9 @@ localhost:8080/api/greeting
 # NodePort variant
 
 kubectl port-forward service/greeting-service 8080:8090
+
+## With Helm
+
+helm install with-helm --namespace hello-world --create-namespace .\with-helm\
+
+helm install with-helm --namespace greeting-ns .\with-helm\

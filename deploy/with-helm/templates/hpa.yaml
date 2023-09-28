@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: { { include "greetings-service-helm-way.fullname" . } }
+  name: { { include "with-helm.fullname" . } }
   labels:
-    { { - include "greetings-service-helm-way.labels" . | nindent 4 } }
+    { { - include "with-helm.labels" . | nindent 4 } }
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: { { include "greetings-service-helm-way.fullname" . } }
+    name: { { include "with-helm.fullname" . } }
   minReplicas: { { .Values.autoscaling.minReplicas } }
   maxReplicas: { { .Values.autoscaling.maxReplicas } }
   metrics:
