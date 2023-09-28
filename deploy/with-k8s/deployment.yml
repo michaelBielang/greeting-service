@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: greeting-deployment
+  namespace: greeting-ns
+spec:
+  selector:
+    matchLabels:
+      app: greeting-service
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: greeting-service
+    spec:
+      containers:
+        - name: greeting-service-container
+          image: docker.io/library/greeting-service:0.0.1
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8090
+          livenessProbe:
+            httpGet:
+              path: /api/actuator/health
+              port: 8090
+            initialDelaySeconds: 5
+          readinessProbe:
+            httpGet:
+              path: api/actuator/health
+              port: 8090
+            initialDelaySeconds: 5

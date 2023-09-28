@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: { { include "greetings-service-helm-way.fullname" . } }
+  labels:
+    { { - include "greetings-service-helm-way.labels" . | nindent 4 } }
+spec:
+  type: { { .Values.service.type } }
+  ports:
+    - port: { { .Values.service.port } }
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    { { - include "greetings-service-helm-way.selectorLabels" . | nindent 4 } }
