@@ -18,6 +18,12 @@ docker context use default
 
 minikube start
 
+Check if ingress addon is enabled
+minikube addons list
+
+If the Ingress addon is not enabled, enter the following command to enable it:
+minikube addons enable ingress
+
 minikube stop
 
 minikube delete
@@ -59,3 +65,10 @@ kubectl port-forward service/greeting-service 8080:8090
 helm install with-helm --namespace hello-world --create-namespace .\with-helm\
 
 helm install with-helm --namespace greeting-ns .\with-helm\
+
+helm install hello-world-prod — namespace hello-world-prod — create-namespace ./helm -f ./helm/values-prod.yaml
+
+## Sources
+
+https://siweheee.medium.com/deploy-your-programs-onto-minikube-with-docker-and-helm-a68097e8d545
+
